@@ -30,16 +30,14 @@ def PCA(data, correlation=False, sort=True):
 
 def main():
     # 加载原始点云
-    with open('/home/yuenlin/data/modelnet40_normal_resampled/'
-              'modelnet40_shape_names.txt') as f:
+    with open('C:\\Users\\19002\\Desktop\\cloud_lesson\\lesson-one\\airplane_0001.txt') as f:
         a = f.readlines()
     for i in a:
         point_cloud_pynt = PyntCloud.from_file(
-            '/home/yuenlin/data/modelnet40_normal_resampled/'
-            '{}/{}_0001.txt'.format(i.strip(), i.strip()), sep=",",
+            'C:\\Users\\19002\\Desktop\\cloud_lesson\\lesson-one\\airplane_0001.txt'.format(i.strip(), i.strip()), sep=",",
             names=["x", "y", "z", "nx", "ny", "nz"])
     point_cloud_o3d = point_cloud_pynt.to_instance("open3d", mesh=False)
-    # o3d.visualization.draw_geometries([point_cloud_o3d]) # 显示原始点云
+    o3d.visualization.draw_geometries([point_cloud_o3d]) # 显示原始点云
 
     # 从点云中获取点，只对点进行处理
     points = point_cloud_pynt.points

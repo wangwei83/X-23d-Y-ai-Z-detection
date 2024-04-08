@@ -7,3 +7,5 @@ conda activate cloud_lesson
 conda install python=3.11
 
 pip install open3d
+
+pip install pyntcloud
