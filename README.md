@@ -14,3 +14,7 @@ pip install pyntcloud
 可以显示了。但是不知道为什么不能打印print，准确说是在o3d调用之后。
 
 [Open3D WARNING] [ViewControl] SetViewPoint() failed because window height and width are not set.
+
+pip install jupyterlab
+
+jupyter lab
