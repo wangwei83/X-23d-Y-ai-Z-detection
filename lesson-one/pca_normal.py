@@ -16,7 +16,14 @@ from pyntcloud import PyntCloud
 def PCA(data, correlation=False, sort=True):
     # 作业1
     # 屏蔽开始
-
+    mean = np.mean(np.asarray(data),axis=0)
+    X_mean = data-mean
+    if correlation:
+        H = np.corrcoef(X_mean.T)
+    else:
+        H = np.cov(X_mean.T)     
+    
+    eigenvalues,eigenvectors=np.linalg.eig(H)
 
     # 屏蔽结束
 
@@ -29,12 +36,14 @@ def PCA(data, correlation=False, sort=True):
 
 
 def main():
-    # 加载原始点云
-    with open('C:\\Users\\19002\\Desktop\\cloud_lesson\\lesson-one\\airplane_0001.txt') as f:
+    # 加载原始点云  lesson-one\modelnet40_shape_names.txt
+    with open('.\\lesson-one\\'
+              'modelnet40_shape_names.txt') as f:
         a = f.readlines()
     for i in a:
         point_cloud_pynt = PyntCloud.from_file(
-            'C:\\Users\\19002\\Desktop\\cloud_lesson\\lesson-one\\airplane_0001.txt'.format(i.strip(), i.strip()), sep=",",
+            '.\\lesson-one\\'
+            '{}/{}_0001.txt'.format(i.strip(), i.strip()), sep=",",
             names=["x", "y", "z", "nx", "ny", "nz"])
     point_cloud_o3d = point_cloud_pynt.to_instance("open3d", mesh=False)
     o3d.visualization.draw_geometries([point_cloud_o3d]) # 显示原始点云
@@ -48,7 +57,7 @@ def main():
     point_cloud_vector = v[:, 0] #点云主方向对应的向量
     print('the main orientation of this pointcloud is: ', point_cloud_vector)
     # TODO: 此处只显示了点云，还没有显示PCA
-    # o3d.visualization.draw_geometries([point_cloud_o3d])
+    o3d.visualization.draw_geometries([point_cloud_o3d])
     
     # 循环计算每个点的法向量
     pcd_tree = o3d.geometry.KDTreeFlann(point_cloud_o3d)
@@ -63,7 +72,7 @@ def main():
     # TODO: 此处把法向量存放在了normals中
     point_cloud_o3d.normals = o3d.utility.Vector3dVector(normals)
     o3d.visualization.draw_geometries([point_cloud_o3d])
-
+    print('line75')
 
 if __name__ == '__main__':
     print('hello the point cloud!')
