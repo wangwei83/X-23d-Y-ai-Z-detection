@@ -70,10 +70,9 @@ def main():
     # 屏蔽结束
     normals = np.array(normals, dtype=np.float64)
     # TODO: 此处把法向量存放在了normals中
-    point_cloud_o3d.normals = o3d.utility.Vector3dVector(normals)
-    o3d.visualization.draw_geometries([point_cloud_o3d])
+    #point_cloud_o3d.normals = o3d.utility.Vector3dVector(normals)
+    #o3d.visualization.draw_geometries([point_cloud_o3d])
     print('line75')
 
 if __name__ == '__main__':
-    print('hello the point cloud!')
     main()
