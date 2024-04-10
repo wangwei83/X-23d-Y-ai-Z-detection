@@ -46,7 +46,7 @@ def main():
             '{}/{}_0001.txt'.format(i.strip(), i.strip()), sep=",",
             names=["x", "y", "z", "nx", "ny", "nz"])
     point_cloud_o3d = point_cloud_pynt.to_instance("open3d", mesh=False)
-    o3d.visualization.draw_geometries([point_cloud_o3d]) # 显示原始点云
+    #o3d.visualization.draw_geometries([point_cloud_o3d]) # 显示原始点云
 
     # 从点云中获取点，只对点进行处理
     points = point_cloud_pynt.points
@@ -57,7 +57,7 @@ def main():
     point_cloud_vector = v[:, 0] #点云主方向对应的向量
     print('the main orientation of this pointcloud is: ', point_cloud_vector)
     # TODO: 此处只显示了点云，还没有显示PCA
-    o3d.visualization.draw_geometries([point_cloud_o3d])
+    #o3d.visualization.draw_geometries([point_cloud_o3d])
     
     # 循环计算每个点的法向量
     pcd_tree = o3d.geometry.KDTreeFlann(point_cloud_o3d)
