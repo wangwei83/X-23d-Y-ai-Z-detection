@@ -55,8 +55,14 @@ def main():
     # 用PCA分析点云主方向
     w, v = PCA(points)
     point_cloud_vector = v[:, 0] #点云主方向对应的向量
+    #point_cloud_vector = v[:, :2] #点云主方向对应的向量
     print('the main orientation of this pointcloud is: ', point_cloud_vector)
     # TODO: 此处只显示了点云，还没有显示PCA
+    #new_points = np.zeros_like(point_cloud_o3d)
+    #new_points[:,:2] = np.matmul(point_cloud_o3d,point_cloud_vector)
+    #new_pcd = o3d.geometry.PointCloud()
+    #new_pcd.points = o3d.utility.Vector3dVector(new_points)
+    #o3d.visualization.draw_geometries([new_pcd])
     #o3d.visualization.draw_geometries([point_cloud_o3d])
     
     # 循环计算每个点的法向量
@@ -64,7 +70,16 @@ def main():
     normals = []
     # 作业2
     # 屏蔽开始
+    for i in range(points.shape[0]):
+        [_,idx,_]=pcd_tree.search_knn_vector_3d(
+            point_cloud_o3d.points[i],20)
+        neighbour_points = np.asarray(point_cloud_o3d.points)[idx]
 
+        w,v = PCA(neighbour_points)
+        normal_vector=v[:,-1]
+        normals.append(normal_vector)
+    o3d.visualization.draw_geometries(
+        [point_cloud_o3d],point_show_normal=True)
     # 由于最近邻搜索是第二章的内容，所以此处允许直接调用open3d中的函数
 
     # 屏蔽结束
