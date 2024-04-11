@@ -55,7 +55,7 @@ def main():
     # filename = os.path.join(root_dir, cat[cat_index],'train', cat[cat_index]+'_0001.ply') # 默认使用第一个点云
     # point_cloud_pynt = PyntCloud.from_file(file_name)
 
-    data_dir='.\\lesson-one\\'
+    data_dir='.\\lesson-one\\'  #明天尝试一下体素滤波
 
     with open(data_dir+'modelnet40_shape_names.txt') as f:
         a = f.readlines()
