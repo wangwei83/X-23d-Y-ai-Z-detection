@@ -41,3 +41,14 @@ fixed radius-NN
 
 迭代、递归实现BST的查找
 
+knn_search 
+kd-tree radius-nn search
+
+octree
+
+PS C:\Users\19002\Desktop\cloud_lesson> & C:/ProgramData/anaconda3/envs/cloud_lesson/python.exe c:/Users/19002/Desktop/cloud_lesson/NN-Trees-master/octree.py
+Radius search normal:
+Search takes 72723.035ms
+
+Radius search fast:
+Search takes 27173.040ms
