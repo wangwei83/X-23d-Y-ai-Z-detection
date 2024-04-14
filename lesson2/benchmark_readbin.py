@@ -6,6 +6,7 @@ import numpy as np
 import time
 import os
 import struct
+import open3d as o3d 
 
 import octree as octree
 import kdtree as kdtree
@@ -42,8 +43,19 @@ def main():
     brute_time_sum = 0
     for i in range(iteration_num):
         filename = os.path.join(root_dir, cat[i])
-        print(filename)
+      
         db_np = read_velodyne_bin(filename)
+
+        #可视化信息
+        #begin wang.david.wei
+        print(filename)
+        # 创建一个空的点云对象
+        pcd = o3d.geometry.PointCloud()
+        # 将NumPy数组中的点传递给点云对象
+        pcd.points = o3d.utility.Vector3dVector(db_np)
+        print(db_np)
+        o3d.visualization.draw_geometries([pcd]) 
+        #end wang.david.wei
 
         begin_t = time.time()
         root = octree.octree_construction(db_np, leaf_size, min_extent)
