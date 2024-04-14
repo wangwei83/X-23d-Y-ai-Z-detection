@@ -52,3 +52,10 @@ Search takes 72723.035ms
 
 Radius search fast:
 Search takes 27173.040ms
+
+PS C:\Users\19002\Desktop\cloud_lesson> & C:/ProgramData/anaconda3/envs/cloud_lesson/python.exe c:/Users/19002/Desktop/cloud_lesson/lesson2/benchmark_readbin.py
+octree --------------
+.\lesson2\kitti\000000.bin
+Octree: build 1303.480, knn 0.998, radius 0.000, brute 12.965
+kdtree --------------
+Kdtree: build 156.581, knn 3.026, radius 0.000, brute 11.940
