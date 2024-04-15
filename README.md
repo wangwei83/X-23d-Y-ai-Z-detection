@@ -67,3 +67,5 @@ kitti，文件格式是bin文件
 
 
 pip install scikit-learn
+
+pip install seaborn
