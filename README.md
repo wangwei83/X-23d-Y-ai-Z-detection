@@ -64,3 +64,6 @@ Kdtree: build 156.581, knn 3.026, radius 0.000, brute 11.940
 数据集
 modelnet40，文件格式是txt
 kitti，文件格式是bin文件
+
+
+pip install scikit-learn
