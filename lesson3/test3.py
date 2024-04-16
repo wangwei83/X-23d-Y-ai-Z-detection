@@ -16,7 +16,9 @@ class GMM:
         self.data = data
         N, dim = self.data.shape
         self.Mu = self.data[np.random.choice(range(N), self.n_clusters, replace=False)]
-        self.Var = np.array([np.eye(dim)] * self.n_clusters)
+        #self.Var = np.array([np.eye(dim)] * self.n_clusters)
+		self.Var = np.array([np.eye(dim) * 1.0 for _ in range(self.n_clusters)])  # 使协方差矩阵稍大一点
+		
         self.W = np.ones([N, self.n_clusters]) / self.n_clusters
         self.pi = np.ones(self.n_clusters) / self.n_clusters
 
