@@ -84,8 +84,7 @@ def ground_segmentation(data):
 # 输出：
 #     clusters_index： 一维数组，存储的是点云中每个点所属的聚类编号（参考上一章内容容易理解）
 def clustering(data):
-    if data.ndim == 1:
-        data = data.reshape(-1, 1)
+    
     # 作业2
     # 屏蔽开始
     dis = 0.5
@@ -93,6 +92,9 @@ def clustering(data):
     n =len(data)
 
     leaf_size = 8
+    if data.ndim == 1:
+        data = data.reshape(-1, 1)
+        
     kdtree = KDTree(data,leaf_size)
 
     core_set = set()
