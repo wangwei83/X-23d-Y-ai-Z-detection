@@ -73,3 +73,7 @@ pip install seaborn
 pip install opencv-python
 
 MLP和FC是等效的。
+
+
+pip install tensorflow
+
