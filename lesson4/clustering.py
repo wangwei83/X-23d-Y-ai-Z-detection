@@ -7,6 +7,8 @@ import numpy as np
 import os
 import struct
 from sklearn import cluster, datasets, mixture
+from sklearn.neighbors import KDTree
+import random
 from itertools import cycle, islice
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -45,11 +47,36 @@ def ground_segmentation(data):
     best_idx = []
     best_inliner = (1-outlier_ratio)*n
     best_A, best_B,best_C, best_D = 0,0,0,0
+
+    for i in range(iter_num):
+        random_index = random.sample(range(n),3)
+        point0 = data[random_index[0]]
+        point1 = data[random_index[1]]
+        point2 = data[random_index[2]]
+
+        vector0_1 = point1-point0
+        vector0_2 = point2-point0
+        N = np.cross(vector0_1,vector0_2)
+        A,B,C = N[0],N[1],N[2]
+        D = -np.dot(N,point0)
+        inliners =0
+        distance = abs(np.dot(data,N)+D)/np.linalg.norm(N)
+        idx = distance<sigma
+        inliners = idx.sum()
+
+        if inliners>best_inliner:
+            best_idx =idx
+            best_inliner = inliners
+            best_A, best_B,best_C, best_D = A,B,C,D
+        
+        if inliners>(1-outlier_ratio)*n:
+            break
+    segmengted_cloud_idx = best_idx
     # 屏蔽结束
 
     print('origin data points num:', data.shape[0])
-    print('segmented data points num:', segmengted_cloud.shape[0])
-    return segmengted_cloud
+    print('segmented data points num:', segmengted_cloud_idx.shape[0])
+    return segmengted_cloud_idx
 
 # 功能：从点云中提取聚类
 # 输入：
@@ -57,13 +84,53 @@ def ground_segmentation(data):
 # 输出：
 #     clusters_index： 一维数组，存储的是点云中每个点所属的聚类编号（参考上一章内容容易理解）
 def clustering(data):
+    if data.ndim == 1:
+        data = data.reshape(-1, 1)
     # 作业2
     # 屏蔽开始
+    dis = 0.5
+    min_sample =5
+    n =len(data)
 
+    leaf_size = 8
+    kdtree = KDTree(data,leaf_size)
 
+    core_set = set()
+    unvisit_set = set(range(n))
+    k = 0
+    cluster_index = np.zeros(n,dtype=int)
+
+    nearest_idx = kdtree.query_radius(data,dis)
+    for i in range(n):
+        if len(nearest_idx[i])>=min_sample:
+            core_set.add(i)
+    
+    while len(core_set):
+        unvisit_set_old = unvisit_set
+        core = list(core_set)[np.random.randint(0,len(core_set))]
+        unvisit_set = unvisit_set-set([core])
+        visited = []
+        visited.append(core)
+
+        while len(visited):
+            new_core = visited[0]
+            if new_core in core_set:
+                S = set(unvisit_set)&set(nearest_idx[new_core])
+                visited.extend(list(S))
+                unvisit_set = unvisit_set-S
+            visited.remove(new_core)
+        
+        cluster = unvisit_set_old-unvisit_set
+        core_set = core_set-cluster
+        cluster_index[list(cluster)] = k
+        k = k+1
+        print("core_set:",len(core_set),"unvisit_set",len(unvisit_set))
+    
+    noise_cluster = unvisit_set
+    cluster_index[list(noise_cluster)]=-1
     # 屏蔽结束
 
-    return clusters_index
+    return cluster_index
 
 # 功能：显示聚类点云，每个聚类一种颜色
 # 输入：
@@ -80,10 +147,20 @@ def plot_clusters(data, cluster_index):
     plt.show()
 
 def main():
-    root_dir = 'lesson2\kitti' # 数据集路径  lesson2\kitti
+    #root_dir = '.\lesson4\kitti' # 数据集路径  lesson2\kitti
+    #root_dir = 'C:/Users/19002/Desktop/cloud_lesson/lesson2/kitti/' # 数据集路径  lesson2\kitti  C:\Users\19002\Desktop\cloud_lesson\lesson2\kitti
+    #cat = os.listdir(root_dir)
+    
+
+    root_dir = '.\lesson2\kitti' # 数据集路径  lesson2\kitti
     cat = os.listdir(root_dir)
-    cat = cat[1:]
     iteration_num = len(cat)
+
+    print("octree --------------")
+    print(iteration_num)
+
+    #cat = cat[1:]
+    #iteration_num = len(cat)
 
     for i in range(iteration_num):
         filename = os.path.join(root_dir, cat[i])
