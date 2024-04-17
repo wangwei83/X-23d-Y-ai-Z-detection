@@ -77,3 +77,4 @@ MLP和FC是等效的。
 
 pip install tensorflow
 
+pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
