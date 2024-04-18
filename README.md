@@ -89,3 +89,8 @@ pip install torch-sparse -f https://pytorch-geometric.com/whl/torch-${TORCH}+${C
 pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
 pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
 pip install torch-geometric
+
+
+PS C:\Users\19002\Desktop\cloud_lesson> & C:/ProgramData/anaconda3/envs/cloud_lesson/python.exe c:/Users/19002/Desktop/cloud_lesson/lesson6/moe.py
+Model output: tensor([[-0.0604,  0.0165, -0.0201, -0.0517, -0.0504, -0.0114,  0.1238, -0.1318,
+         -0.1759,  0.0046]], grad_fn=<AddmmBackward0>)
