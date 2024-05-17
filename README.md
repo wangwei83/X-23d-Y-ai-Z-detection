@@ -20,7 +20,7 @@
 ## 读一些书
 
 <div align="center">
-    <img src="image\3D计算机视觉.jpg" width="400" style="left;"/>
+    <img src="image\3D计算机视觉.png" width="400" style="left;"/>
 </div>
 
 <div align="center">
