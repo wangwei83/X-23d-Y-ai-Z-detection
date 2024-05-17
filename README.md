@@ -17,6 +17,15 @@
 
 ### 持续技术变现
 
+## 读一些书
+
+<div align="center">
+    <img src="image\3D计算机视觉.jpg" width="400" style="left;"/>
+</div>
+
+<div align="center">
+    <img src="image\人工智能点云处理机深度学习算法.jpg" style="left;"/>
+</div>
 --------------------------
 ### 安装步骤
 conda create -n cloud_lesson
