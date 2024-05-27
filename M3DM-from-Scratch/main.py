@@ -2,12 +2,13 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-27 19:06:20
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-27 19:53:15
+LastEditTime: 2024-05-27 19:58:49
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/main.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
 import argparse
 import os
+import pandas as pd
 
 from dataset import mvtec3d_classes  # Import the module that contains the 'mvtec3d_classes' function
 
@@ -20,6 +21,10 @@ def run_3d_ads(args):
     
     METHOD_NAME = [args.method_name]
     
+    image_rocaucs_df=pd.DataFrame(METHOD_NAME, columns=['Method'])
+    pixel_rocaucs_df=pd.DataFrame(METHOD_NAME, columns=['Method'])
+    au_pros_df=pd.DataFrame(METHOD_NAME, columns=['Method']) 
+       
    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
