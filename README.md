@@ -2,7 +2,7 @@
  * @Author: wangwei83 wangwei83@cuit.edu.cn
  * @Date: 2024-05-27 15:00:27
  * @LastEditors: wangwei83 wangwei83@cuit.edu.cn
- * @LastEditTime: 2024-05-27 20:33:32
+ * @LastEditTime: 2024-05-27 20:35:14
  * @FilePath: /wangwei/X-23d-Y-ai-Z-detection/README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -34,7 +34,7 @@
 
 ## 持续技术变现
 
-## 读一些书
+## 基础理论知识
 
 <div align="center">
     <img src="image/3D计算机视觉.png" width="400"/>
