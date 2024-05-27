@@ -1,11 +1,12 @@
 '''
 Author: yuanshuailk 449235430@qq.com
 Date: 2024-05-27 15:11:44
-LastEditors: yuanshuailk 449235430@qq.com
-LastEditTime: 2024-05-27 15:15:26
+LastEditors: wangwei83 wangwei83@cuit.edu.cn
+LastEditTime: 2024-05-27 15:30:35
 FilePath: /wangwei/main.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
+
 import cv2
 import numpy as np
 
