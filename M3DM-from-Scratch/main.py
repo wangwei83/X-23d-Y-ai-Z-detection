@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-27 19:06:20
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-27 22:27:42
+LastEditTime: 2024-05-27 23:40:57
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/main.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -61,9 +61,6 @@ if __name__ == '__main__':
     print(args.rgb_backbone_name)
     print(args.xyz_backbone_name)
     print(args.save_feature)
-
-    # current_path = os.getcwd()
-    # print("Current Path:", current_path)
 
     run_3d_ads(args)
     
