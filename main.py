@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # 加载图像
-img = cv2.imread('image.jpg')
+img = cv2.imread('X-23d-Y-ai-Z-detection/image/人工智能点云处理机深度学习算法.jpg')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 # Canny 边缘检测
@@ -25,7 +25,5 @@ for line in lines:
 
     cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
-# 显示图像
-cv2.imshow('image', img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# 保存图像
+cv2.imwrite('X-23d-Y-ai-Z-detection/image/output.jpg', img)
