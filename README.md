@@ -1,80 +1,58 @@
-<!--
- * @Author: wangwei83 wangwei83@cuit.edu.cn
- * @Date: 2024-05-27 15:00:27
- * @LastEditors: wangwei83 wangwei83@cuit.edu.cn
- * @LastEditTime: 2024-05-27 17:21:11
- * @FilePath: /wangwei/X-23d-Y-ai-Z-detection/README.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 # 工业三维视觉检测
 
-### 思考研究意义
+## 思考研究意义
+
 <div align="center">
     <img src="litmaps.png" width="800"/>
 </div>
 
-### 聚焦视觉检测
+## 聚焦视觉检测
 
 <div align="center">
     <img src="research&engineer.png" width="600"/>
 </div>
 
-### 凝练科学问题
+## 凝练科学问题
 
-### 实现技术路线
+## 实现技术路线
 
-### 持续技术变现
+## 持续技术变现
 
 ## 读一些书
 
 <div align="center">
-    <img src="image\3D计算机视觉.png" width="400" style="left;"/>
+    <img src="image/3D计算机视觉.png" width="400"/>
 </div>
 
 <div align="center">
-    <img src="image\人工智能点云处理机深度学习算法.jpg" style="left;"/>
+    <img src="image/人工智能点云处理机深度学习算法.jpg"/>
 </div>
---------------------------
-### 安装步骤
+
+---
+
+## 安装步骤
+
+```bash
 conda create -n cloud_lesson
-
 conda activate cloud_lesson
-
 conda install python=3.11
-
 pip install open3d
-
 pip install pyntcloud
-
 pip install jupyterlab
-
 jupyter lab
-
 pip install scikit-learn
-
 pip install seaborn
-
 pip install opencv-python
-
 pip install tensorflow
-
 pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
-
 pip install scipy
-
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-
 pip install torch-scatter -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
-
 pip install torch-sparse -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
-
 pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
-
 pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
-
 pip install torch-geometric
 
-### 数据集
+数据集
 modelnet40，文件格式是txt
 kitti，文件格式是bin文件
-
