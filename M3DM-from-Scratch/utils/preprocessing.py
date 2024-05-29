@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-29 09:21:55
+LastEditTime: 2024-05-29 09:59:31
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -16,13 +16,23 @@ import mvtec3d_util as mvt_util
 import open3d as o3d
 
 def get_edges_of_pc(organized_pc):
-    # Get the edges of the point cloud
-    pass
+    # print(organized_pc)
+    # 新的数组的第一维的大小是原数组的第一维和第二维的元素总数，第二维的大小是原数组的第三维的大小。
+    unorganized_edges_pc=organized_pc[0:10,:,:].reshape(organized_pc[0:10,:,:].shape[0]*organized_pc[0:10,:,:].shape[1],organized_pc[0:10,:,:].shape[2])
+    # print(unorganized_edges_pc)
+    # 沿着行的方向进行拼接
+    unorganized_edges_pc=np.concatenate((unorganized_edges_pc,organized_pc[-10:,:,:].reshape(organized_pc[-10:,:,:].shape[0]*organized_pc[-10:,:,:].shape[1],organized_pc[-10:,:,:].shape[2])),axis=0)
+    unorganized_edges_pc = np.concatenate((unorganized_edges_pc,organized_pc[:,0:10,:].reshape(organized_pc[:,0:10,:].shape[0]*organized_pc[:,0:10,:].shape[1],organized_pc[:,0:10,:].shape[2])),axis=0)
+    unorganized_edges_pc = np.concatenate((unorganized_edges_pc,organized_pc[:,-10:,:].reshape(organized_pc[:,-10:,:].shape[0]*organized_pc[:,-10:,:].shape[1],organized_pc[:,-10:,:].shape[2])),axis=0)
+    return unorganized_edges_pc
+    
 def get_plane_eq(unorganized_pc,ransac_n_pts=50):
-    print(unorganized_pc)
-    # o3d_pc=o3d.geometry.PointCloud(o3d.utility.Vector3dVector(unorganized_pc))
-    # plane_model, inliers = o3d_pc.segment_plane(distance_threshold=0.04, ransac_n=ransac_n_pts, num_iterations=1000)
-    # return plane_model
+    # print(unorganized_pc)
+    o3d_pc=o3d.geometry.PointCloud(o3d.utility.Vector3dVector(unorganized_pc))
+    # print('o3d_pc')
+    # print(o3d_pc)
+    plane_model, inliers = o3d_pc.segment_plane(distance_threshold=0.04, ransac_n=ransac_n_pts, num_iterations=1000)
+    return plane_model
     
 def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     # Remove the plane
@@ -34,6 +44,8 @@ def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     
     # REMOVE PLANE
     plance_model = get_plane_eq(get_edges_of_pc(organized_pc_clean))
+    print('plance_model')
+    print(plance_model)
     
     planeless_organized_pc = organized_pc_clean
     planeless_organized_rgb = organized_rgb
