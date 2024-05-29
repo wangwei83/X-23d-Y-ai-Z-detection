@@ -2,7 +2,7 @@
  * @Author: wangwei83 wangwei83@cuit.edu.cn
  * @Date: 2024-05-27 15:00:27
  * @LastEditors: wangwei83 wangwei83@cuit.edu.cn
- * @LastEditTime: 2024-05-28 00:00:04
+ * @LastEditTime: 2024-05-29 21:52:23
  * @FilePath: /wangwei/X-23d-Y-ai-Z-detection/README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -46,32 +46,6 @@
 
 ---
 
-$$
-\begin{equation}
-\begin{bmatrix}
-u \\
-v \\
-w
-\end{bmatrix}
-=
-\begin{bmatrix}
-f_x & 0 & c_x \\
-0 & f_y & c_y \\
-0 & 0 & 1
-\end{bmatrix}
-\begin{bmatrix}
-R_{11} & R_{12} & R_{13} & T_1 \\
-R_{21} & R_{22} & R_{23} & T_2 \\
-R_{31} & R_{32} & R_{33} & T_3
-\end{bmatrix}
-\begin{bmatrix}
-X \\
-Y \\
-Z \\
-1
-\end{bmatrix}
-\end{equation}
-$$
 
 
 
