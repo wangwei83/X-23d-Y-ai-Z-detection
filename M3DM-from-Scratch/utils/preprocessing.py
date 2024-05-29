@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-29 10:22:53
+LastEditTime: 2024-05-29 11:13:09
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -44,9 +44,9 @@ def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     
     # REMOVE PLANE
     plance_model = get_plane_eq(get_edges_of_pc(organized_pc_clean))
-    # print('plance_model')
-    # print(plance_model)
-    
+    distance=np.abs(np.dot(np.array(plance_model),np.hstack((clean_planeless_unorganized_pc,np.ones((clean_planeless_unorganized_pc.shape[0],1)))).T))
+    plane_indices=np.argwhere(distance<distance_threshold)
+      
     planeless_organized_pc = organized_pc_clean
     planeless_organized_rgb = organized_rgb
     return planeless_organized_pc, planeless_organized_rgb
@@ -73,6 +73,15 @@ if __name__ == '__main__':
     root_path = args.dataset_path
     paths=Path(root_path).rglob('*.tiff')
     print(f"Found {len(list(paths))} tiff files in {root_path}")
+
+    # 真实代码分支
+    # for path in Path(root_path).rglob('*.tiff'):
+    #     preprocess_pc(path)
     
-    for path in Path(root_path).rglob('*.tiff'):
+    # 测试分支，减少文件的读取次数
+    for i, path in enumerate(Path(root_path).rglob('*.tiff')):
+        print(i)
         preprocess_pc(path)
+        if i >= 100:
+            break
+        
