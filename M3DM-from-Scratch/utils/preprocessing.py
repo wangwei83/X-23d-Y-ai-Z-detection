@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-29 14:44:57
+LastEditTime: 2024-05-29 15:03:58
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -52,7 +52,7 @@ def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     clean_planeless_unorganized_pc[plane_indices] = 0
     clean_planeless_organized_pc = clean_planeless_unorganized_pc.reshape(organized_pc_clean.shape[0],
                                                                         organized_pc_clean.shape[1],
-                                                                        organized_pc_clean.shape[2])                                                                         )
+                                                                        organized_pc_clean.shape[2])
     planeless_organized_rgb = planeless_unorganized_rgb.reshape(organized_rgb.shape[0],
                                                                 organized_rgb.shape[1],
                                                                 organized_rgb.shape[2])
