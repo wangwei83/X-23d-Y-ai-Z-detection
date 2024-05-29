@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-28 23:52:37
+LastEditTime: 2024-05-29 09:21:55
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -19,8 +19,10 @@ def get_edges_of_pc(organized_pc):
     # Get the edges of the point cloud
     pass
 def get_plane_eq(unorganized_pc,ransac_n_pts=50):
-    o3d_pc=o3d.geometry.PointCloud(o3d.utility.Vector3dVector(unorganized_pc))
-    pass
+    print(unorganized_pc)
+    # o3d_pc=o3d.geometry.PointCloud(o3d.utility.Vector3dVector(unorganized_pc))
+    # plane_model, inliers = o3d_pc.segment_plane(distance_threshold=0.04, ransac_n=ransac_n_pts, num_iterations=1000)
+    # return plane_model
     
 def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     # Remove the plane
