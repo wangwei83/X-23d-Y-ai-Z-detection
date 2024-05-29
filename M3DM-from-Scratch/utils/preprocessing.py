@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-29 11:14:44
+LastEditTime: 2024-05-29 14:04:52
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -40,17 +40,24 @@ def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     unorganized_pc  = mvt_util.organized_pc_to_unorganized_pc(organized_pc_clean)
     unorganized_rgb = mvt_util.organized_pc_to_unorganized_pc(organized_rgb)
     clean_planeless_unorganized_pc =unorganized_pc.copy()
-    planeless_organized_rgb = unorganized_rgb.copy()
+    planeless_unorganized_rgb = unorganized_rgb.copy()
     
     # REMOVE PLANE
     plance_model = get_plane_eq(get_edges_of_pc(organized_pc_clean))
     distance=np.abs(np.dot(np.array(plance_model),np.hstack((clean_planeless_unorganized_pc,np.ones((clean_planeless_unorganized_pc.shape[0],1)))).T))
     plane_indices=np.argwhere(distance<distance_threshold)
-    print(plane_indices)
-      
-    planeless_organized_pc = organized_pc_clean
-    planeless_organized_rgb = organized_rgb
-    return planeless_organized_pc, planeless_organized_rgb
+    # print(plane_indices)
+    
+    planeless_unorganized_rgb[plane_indices] = 0
+    clean_planeless_unorganized_pc[plane_indices] = 0
+    clean_planeless_organized_pc = clean_planeless_unorganized_pc.reshape(organized_pc_clean.shape[0],
+                                                                        organized_pc_clean.shape[1],
+                                                                        organized_pc_clean.shape[2])                                                                         )
+    planeless_organized_rgb = planeless_unorganized_rgb.reshape(organized_rgb.shape[0],
+                                                                organized_rgb.shape[1],
+                                                                organized_rgb.shape[2])
+    
+    return clean_planeless_organized_pc, planeless_organized_rgb
 
 def preprocess_pc(tiff_path):
     organized_pc = mvt_util.read_tiff_organized_pc(tiff_path)
@@ -65,7 +72,9 @@ def preprocess_pc(tiff_path):
         organized_gt = np.array(Image.open(gt_path))
         # print(organized_gt)
     
+    # REMOVE PLANE
     planeless_organized_pc, planeless_organized_rgb = remove_plane(organized_pc, organized_rgb)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -77,12 +86,12 @@ if __name__ == '__main__':
 
     # 真实代码分支
     # for path in Path(root_path).rglob('*.tiff'):
-    #     preprocess_pc(path)
+    #     preprocess_pc(path
     
     # 测试分支，减少文件的读取次数
     for i, path in enumerate(Path(root_path).rglob('*.tiff')):
-        print(i)
+        # print(i)
         preprocess_pc(path)
-        if i >= 10:
+        if i >= 5:
             break
         
