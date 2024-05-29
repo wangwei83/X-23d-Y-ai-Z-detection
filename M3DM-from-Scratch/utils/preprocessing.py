@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-29 16:24:44
+LastEditTime: 2024-05-29 17:49:19
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -15,7 +15,6 @@ from PIL import Image
 import numpy as np
 import mvtec3d_util as mvt_util
 import open3d as o3d
-
 
 def get_edges_of_pc(organized_pc):
     # print(organized_pc)
@@ -64,11 +63,16 @@ def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
 def roundup_next_100(x):
     # 将输入的x向上取整到最近的100的倍数
     return int(math.ceil(x/100.0))*100
+
 def connected_components_cleaning(organized_pc,organized_rgb,image_path):    
     unorganized_pc = mvt_util.organized_pc_to_unorganized_pc(organized_pc)
     unorganized_rgb = mvt_util.organized_pc_to_unorganized_pc(organized_rgb)
     
     nonzero_indices = np.nonzero(np.all(unorganized_pc!=0,axis=1))[0]
+    unorganized_pc_no_zeros = unorganized_pc[nonzero_indices,:]
+    # 采用Open3d库的Pointcloud类将无组织的点云数据转换为Open3d的点云对象
+    o3d_pc = o3d.geometry.PointCloud(o3d.utility.Vector3dVector(unorganized_pc_no_zeros))
+    labels = np.array(o3d_pc.cluster_dbscan(eps=0.006, min_points=30, print_progress=False))
     
 def pad_cropped_pc(cropped_pc, single_channel=False):
     orig_h,orig_w = cropped_pc.shape[0],cropped_pc.shape[1]
@@ -109,9 +113,7 @@ def preprocess_pc(tiff_path):
     if gt_exists:
         padded_planeless_organized_gt = pad_cropped_pc(organized_gt,single_channel=True)
     # 点云连通组件分析和清理工作，跟聚类是不是有什么关系
-    # organized_clustered_pc,organized_clustered_rgb=connected_components_cleaning(padded_planeless_organized_pc,padded_planeless_organized_rgb,tiff_path)
-
-
+    organized_clustered_pc,organized_clustered_rgb=connected_components_cleaning(padded_planeless_organized_pc,padded_planeless_organized_rgb,tiff_path)
 
 def tiff_to_pointcloud(path):
     
@@ -144,10 +146,10 @@ if __name__ == '__main__':
     
     # 测试分支，减少文件的读取次数
     for i, path in enumerate(Path(root_path).rglob('*.tiff')):
-        print(i)
-        print(path)
-        # 这个函数的主要功能是将 TIFF 图像文件转换为点云数据
-        tiff_to_pointcloud(path)
+        # print(i)
+        # print(path)
+        # # 这个函数的主要功能是将 TIFF 图像文件转换为点云数据
+        # tiff_to_pointcloud(path)
 
         preprocess_pc(path)
         if i >= 5:
