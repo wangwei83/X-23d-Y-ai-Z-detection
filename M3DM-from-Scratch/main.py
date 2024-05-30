@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-27 19:06:20
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-31 00:11:41
+LastEditTime: 2024-05-31 00:15:48
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/main.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -49,13 +49,19 @@ if __name__ == '__main__':
     parser.add_argument('--xyz_backbone_name', type=str, default='Point_MAE', help='XYZ backbone name')
     parser.add_argument('--save_feature', action='store_true', help='Save feature flag')
     parser.add_argument('--dataset_type', type=str, default='mvtec3d', help='Type of the dataset')
-    parser.add_argument('--img_size', type=int, default=224, help='size of image')
+    # parser.add_argument('--img_size', type=int, default=224, help='size of image')
     parser.add_argument('--max_sample', type=int, default=400, help='maximum number of samples')
     parser.add_argument('--dataset_path', type=str, default='datasets/mvtec3d', help='path to the dataset')
     parser.add_argument('--group_size', default=128, type=int,
                         help='Point group size of Point Transformer.')
     parser.add_argument('--num_group', default=1024, type=int,
                         help='Point groups number of Point Transformer.')
+    parser.add_argument('--img_size', default=224, type=int,
+                        help='Images size for model')
+    parser.add_argument('--coreset_eps', default=0.9, type=float,
+                        help='eps for sparse project')
+    parser.add_argument('--f_coreset', default=0.1, type=float,
+                        help='eps for sparse project')
     # 解释器解释命令行参数
     args = parser.parse_args()
 
