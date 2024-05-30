@@ -15,4 +15,10 @@ class Features(torch.nn.Module):
     def __init__(self,args,image_size=224,f_coreset=0.1,coreset_eps=0.9):
         super().__init__()
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        # self.deep_feature_extractor = Model()
+        self.deep_feature_extractor = Model(
+                                        device=self.device,
+                                        rgb_backbone_name=args.rgb_backbone_name,
+                                        xyz_backbone_name=args.xyz_backbone_name,
+                                        group_size=args.group_size,
+                                        num_group=args.num_group
+                                        )
