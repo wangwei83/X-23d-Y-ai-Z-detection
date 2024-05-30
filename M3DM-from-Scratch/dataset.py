@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-27 19:43:50
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-27 22:44:06
+LastEditTime: 2024-05-30 18:12:02
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/dataset.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -36,7 +36,13 @@ class TrainDataset(BaseAnomalyDetectionDataset):
         super().__init__(split='train', class_name=class_name, img_size=img_size, dataset_path=dataset_path)
         self.img_paths,self.labels = self.load_dataset()
         
-    
+    def __getitem__(self, idx):
+        img_path,label=self.img_paths[idx],self.labels[idx]
+        rgb_path = img_path[0]
+        tiff_path = img_path[1]
+        
+        return rgb_path, tiff_path, label
+        
     def __len__(self):
         return len(self.img_paths)
     
