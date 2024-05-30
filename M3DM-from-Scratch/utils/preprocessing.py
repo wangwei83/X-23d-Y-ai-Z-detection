@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-30 11:10:53
+LastEditTime: 2024-05-30 17:41:52
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -15,8 +15,7 @@ from PIL import Image
 import numpy as np
 import mvtec3d_util as mvt_util
 import open3d as o3d
-import os
-import os
+import tifffile as tiff
 
 def get_edges_of_pc(organized_pc):
     # print(organized_pc)
@@ -62,10 +61,9 @@ def remove_plane(organized_pc_clean, organized_rgb,distance_threshold=0.005):
     
     return clean_planeless_organized_pc, planeless_organized_rgb
 
-def roundup_next_100(x):
-    # 将输入的x向上取整到最近的100的倍数
-    return int(math.ceil(x/100.0))*100
 
+
+# 对有组织的点云数据进行清理和聚类，移除异常值，去除噪声
 def connected_components_cleaning(organized_pc,organized_rgb,image_path):    
     unorganized_pc = mvt_util.organized_pc_to_unorganized_pc(organized_pc)
     unorganized_rgb = mvt_util.organized_pc_to_unorganized_pc(organized_rgb)
@@ -77,6 +75,30 @@ def connected_components_cleaning(organized_pc,organized_rgb,image_path):
     labels = np.array(o3d_pc.cluster_dbscan(eps=0.006, min_points=30, print_progress=False))
     # print(f"Found {len(np.unique(labels))} clusters in {image_path}")
     
+    unique_clusters_ids,cluster_size = np.unique(labels,return_counts=True)
+    max_label = labels.max()
+    
+    if max_label>0:
+        print(f"Found {max_label+1} clusters in {image_path}")
+        print(f"Cluster sizes: {cluster_size}")
+        print(f"Unique cluster ids: {unique_clusters_ids}")
+    
+    largest_cluster_id = unique_clusters_ids[np.argmax(cluster_size)]
+    
+    outlier_indices_nonzeros_array = np.argwhere(labels!=largest_cluster_id)
+    outlier_indices_original_array = nonzero_indices[outlier_indices_nonzeros_array]
+    unorganized_pc[outlier_indices_original_array] = 0
+    unorganized_rgb[outlier_indices_original_array]=0
+    
+    organized_clustered_pc = unorganized_pc.reshape(organized_pc.shape[0],organized_pc.shape[1],organized_pc.shape[2])
+    organized_clustered_rgb = unorganized_rgb.reshape(organized_rgb.shape[0],organized_rgb.shape[1],organized_rgb.shape[2])
+    
+    return organized_clustered_pc,organized_clustered_rgb
+
+def roundup_next_100(x):
+    # 将输入的x向上取整到最近的100的倍数
+    return int(math.ceil(x/100.0))*100
+
 def pad_cropped_pc(cropped_pc, single_channel=False):
     orig_h,orig_w = cropped_pc.shape[0],cropped_pc.shape[1]
     round_orig_h=roundup_next_100(orig_h)
@@ -118,7 +140,14 @@ def preprocess_pc(tiff_path):
     # 点云连通组件分析和清理工作，跟聚类是不是有什么关系
     organized_clustered_pc,organized_clustered_rgb=connected_components_cleaning(padded_planeless_organized_pc,padded_planeless_organized_rgb,tiff_path)
     # print(padded_planeless_organized_pc.shape)
-    
+    # tiff.imsave(tiff_path,organized_clustered_pc)
+    tiff.imwrite(tiff_path, organized_clustered_pc)
+    Image.fromarray(organized_clustered_rgb).save(rgb_path)
+    if gt_exists:
+        Image.fromarray(padded_planeless_organized_gt).save(gt_path)
+    print(f"Preprocessed {tiff_path}")
+    print(f"Preprocessed {rgb_path}")
+    print(f"Preprocessed {gt_path}")
 
 def tiff_to_pointcloud(path):
     
