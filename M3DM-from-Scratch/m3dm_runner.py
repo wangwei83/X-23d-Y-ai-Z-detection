@@ -3,7 +3,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-27 21:03:16
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-30 23:50:14
+LastEditTime: 2024-05-30 23:51:25
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/m3dm_runner.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -29,6 +29,7 @@ class M3DM():
     def fit(self, class_name):
         # print("Fitting the model for the class: ", cls)
         # 可能数据格式有问题，主要是因为数据没有处理完整。
+        # 还有checkpoint文件也一并处理一下
         train_loader = get_data_loader("train", class_name=class_name, img_size=self.image_size, args=self.args)
         
         flag =0
