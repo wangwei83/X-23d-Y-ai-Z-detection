@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-28 10:48:48
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-30 09:05:55
+LastEditTime: 2024-05-30 10:45:58
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/M3DM-from-Scratch/utils/preprocessing.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -15,6 +15,8 @@ from PIL import Image
 import numpy as np
 import mvtec3d_util as mvt_util
 import open3d as o3d
+import os
+import os
 
 def get_edges_of_pc(organized_pc):
     # print(organized_pc)
@@ -115,6 +117,8 @@ def preprocess_pc(tiff_path):
         padded_planeless_organized_gt = pad_cropped_pc(organized_gt,single_channel=True)
     # 点云连通组件分析和清理工作，跟聚类是不是有什么关系
     # organized_clustered_pc,organized_clustered_rgb=connected_components_cleaning(padded_planeless_organized_pc,padded_planeless_organized_rgb,tiff_path)
+    print(padded_planeless_organized_pc.shape)
+    
 
 def tiff_to_pointcloud(path):
     
