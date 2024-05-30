@@ -8,6 +8,7 @@ Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查�
 '''
 
 
+from typing import Any
 import torch
 from torchvision import transforms
 from PIL import ImageFilter
@@ -19,4 +20,9 @@ class KNNGaussianBlur(torch.nn.Module):
         self.unload = transforms.ToPILImage()
         self.load = transforms.ToTensor()
         self.blur_kernel = ImageFilter.GaussianBlur(radius=4)
+    
+    def __call__(self, img):
+        map_max = img.max()
+        final_map = self.load(self.unload(img[0]/map_max).filter(self.blur_kernel))*map_max
+        return final_map
     
