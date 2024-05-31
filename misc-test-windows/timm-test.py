@@ -39,3 +39,4 @@ with torch.no_grad():
 # 获取预测结果
 _, predicted_idx = torch.max(output, 1)
 print("Predicted:", predicted_idx.item())
+print("Predicted class:", model.classifier[predicted_idx.item()])
