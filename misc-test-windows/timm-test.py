@@ -23,8 +23,8 @@ preprocess = transforms.Compose([
 ])
 
 # 加载图片
-image = Image.open(".\\OIP.jpg")
-input_tensor = preprocess(image)
+image = Image.open("OIP-1.jpg")  # misc-test-windows\OIP.jpg
+input_tensor = preprocess(image) 
 input_batch = input_tensor.unsqueeze(0)
 
 # 如果有GPU，将模型和数据都移动到GPU上
@@ -39,4 +39,4 @@ with torch.no_grad():
 # 获取预测结果
 _, predicted_idx = torch.max(output, 1)
 print("Predicted:", predicted_idx.item())
-print("Predicted class:", model.classifier[predicted_idx.item()])
+# print("Predicted class:", model.classifier[predicted_idx.item()])
