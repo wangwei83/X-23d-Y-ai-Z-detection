@@ -2,7 +2,7 @@
 Author: wangwei83 wangwei83@cuit.edu.cn
 Date: 2024-05-31 21:42:00
 LastEditors: wangwei83 wangwei83@cuit.edu.cn
-LastEditTime: 2024-05-31 21:53:13
+LastEditTime: 2024-06-01 08:44:13
 FilePath: /wangwei/X-23d-Y-ai-Z-detection/misc-test-windows/timm-test.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -13,6 +13,8 @@ from PIL import Image
 # 加载预训练的 VGG16 模型
 model = models.vgg16(pretrained=True)
 model.eval()
+
+
 
 # 图片预处理
 preprocess = transforms.Compose([
@@ -39,4 +41,16 @@ with torch.no_grad():
 # 获取预测结果
 _, predicted_idx = torch.max(output, 1)
 print("Predicted:", predicted_idx.item())
-# print("Predicted class:", model.classifier[predicted_idx.item()])
+print(len(model.classifier))
+
+import json
+import requests
+
+# 下载ImageNet类别列表
+url = "https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"
+response = requests.get(url)
+classes = json.loads(response.text)
+
+print(classes)  # 打印类别列表
+
+print("Predicted:", classes[predicted_idx.item()])  # 打印预测结果
