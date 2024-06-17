@@ -2,7 +2,7 @@
  * @Author: wangwei83 wangwei83@cuit.edu.cn
  * @Date: 2024-06-16 21:39:57
  * @LastEditors: wangwei83 wangwei83@cuit.edu.cn
- * @LastEditTime: 2024-06-17 13:18:50
+ * @LastEditTime: 2024-06-17 14:23:47
  * @FilePath: /wangwei/X-23d-Y-ai-Z-detection/PointTransformer-from-scratch/PointTransformer.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,11 +18,8 @@
 
 Point Transformer 的设计使其能够直接应用于各种计算机视觉任务，如分类和部件分割，并在这些任务的标准基准测试中展示了与先前工作相比的竞争性能。
 
-
-wget https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip -P data/ --no-check-certificate
-
 # 下载 ModelNet40 数据集并解压到 data 文件夹
-wget https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip -P data/
+wget https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip -P data/ --no-check-certificate
 unzip data/modelnet40_normal_resampled.zip -d data/
 
 # 下载 ShapeNet 数据集并解压到 data 文件夹
